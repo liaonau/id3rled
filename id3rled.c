@@ -30,7 +30,7 @@ void str_edit(const char *name, char *buf)
 {
     char rlb[BUFFER_SIZE];
     strncpy(rlb, buf, BUFFER_SIZE);
-    rlb[BUFFER_SIZE] = '\0';
+    rlb[BUFFER_SIZE - 1] = '\0';
 
     char prompt[PROMPT_SIZE];
     make_prompt(prompt, name);
