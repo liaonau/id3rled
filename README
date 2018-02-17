@@ -1,0 +1,2 @@
+id3rled (id3 readline edit)
+Simple application to edit id3 tags interactively in command line with help of readline library.
