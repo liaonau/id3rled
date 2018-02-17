@@ -5,7 +5,7 @@
 #include <readline/readline.h>
 
 #define TAGSID "taAcgyT"
-static const char *delim = " │";
+const char *delim = " │";
 #define PROMPT_SIZE (strlen(delim) + strlen("comment"))
 #define BUFFER_SIZE 1024
 
