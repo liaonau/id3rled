@@ -29,8 +29,7 @@ int set_rl(void)
 void str_edit(const char *name, char *buf)
 {
     char rlb[BUFFER_SIZE];
-    strncpy(rlb, buf, BUFFER_SIZE);
-    rlb[BUFFER_SIZE - 1] = '\0';
+    strcpy(rlb, buf);
 
     char prompt[PROMPT_SIZE];
     make_prompt(prompt, name);
