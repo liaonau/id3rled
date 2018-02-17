@@ -88,7 +88,7 @@ int main(int argc, char **argv)
     make_prompt(p, "file");
     printf("%s%s\n", p, argv[1]);
     free(p);
-    for (char *c = tagslist; *c != '\0'; c++)
+    for (char *c = tagslist; *c; c++)
         switch (*c)
         {
         case 't': EDIT_TAG(title);     break;
@@ -99,7 +99,7 @@ int main(int argc, char **argv)
         case 'y': EDIT_TAG_INT(year);  break;
         case 'T': EDIT_TAG_INT(track); break;
         default :
-                  fprintf(stderr, "Warning: tag has to be in [%s]. Skipping «%c».\n", TAGSID, c[0]);
+                  fprintf(stderr, "Warning: tag has to be in [%s]. Skipping «%c».\n", TAGSID, *c);
         }
 
     taglib_file_save(file);
