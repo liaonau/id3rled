@@ -28,10 +28,10 @@ int set_rl(void)
 }
 void str_edit(const char *name, char *buf)
 {
-    char rlb[BUFFER_SIZE];
+    char *rlb = malloc(BUFFER_SIZE);
     strcpy(rlb, buf);
 
-    char prompt[PROMPT_SIZE];
+    char *prompt = malloc(PROMPT_SIZE);
     make_prompt(prompt, name);
 
     rl_buffer       = rlb;
@@ -43,6 +43,8 @@ void str_edit(const char *name, char *buf)
         strncpy(buf, str, BUFFER_SIZE);
         free(str);
     }
+    free(prompt);
+    free(rlb);
 }
 
 int main(int argc, char **argv)
