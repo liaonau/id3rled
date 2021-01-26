@@ -14,7 +14,7 @@ static void make_prompt(char *p, const char *n)
     for (unsigned int i = 0; i < PROMPT_SIZE - strlen(n) - strlen(delim); i++)
         p[i] = ' ';
     p[PROMPT_SIZE - strlen(n) - strlen(delim)] = '\0';
-    strncat(p, n, strlen(n));
+    strncat(p, n, PROMPT_SIZE);
     for (unsigned int i = 0; i < strlen(delim); i++)
         p[PROMPT_SIZE - strlen(delim) + i] = delim[i];
     p[PROMPT_SIZE] = '\0';
@@ -40,7 +40,7 @@ static void str_edit(const char *name, char *buf)
     char *str;
     if ((str = readline(prompt)))
     {
-        strncpy(buf, str, BUFFER_SIZE);
+        strncpy(buf, str, BUFFER_SIZE - 1);
         free(str);
     }
     free(prompt);
@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 #define EDIT_TAG(name)\
     {\
         char *buf = malloc(BUFFER_SIZE);\
-        strncpy(buf, taglib_tag_##name(tag), BUFFER_SIZE);\
+        strncpy(buf, taglib_tag_##name(tag), BUFFER_SIZE - 1);\
         str_edit(#name, buf);\
         taglib_tag_set_##name(tag, buf);\
         free(buf);\
