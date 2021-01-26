@@ -5,11 +5,11 @@
 #include <readline/readline.h>
 
 #define TAGSID "taAcgyT"
-const char *delim = " │";
+static const char *delim = " │";
 #define PROMPT_SIZE (strlen(delim) + strlen("comment"))
 #define BUFFER_SIZE 1024
 
-void make_prompt(char *p, const char *n)
+static void make_prompt(char *p, const char *n)
 {
     for (unsigned int i = 0; i < PROMPT_SIZE - strlen(n) - strlen(delim); i++)
         p[i] = ' ';
@@ -20,13 +20,13 @@ void make_prompt(char *p, const char *n)
     p[PROMPT_SIZE] = '\0';
 }
 
-char *rl_buffer;
-int set_rl(void)
+static char *rl_buffer;
+static int set_rl(void)
 {
     rl_insert_text(rl_buffer);
     return 0;
 }
-void str_edit(const char *name, char *buf)
+static void str_edit(const char *name, char *buf)
 {
     char *rlb = malloc(BUFFER_SIZE);
     strcpy(rlb, buf);
@@ -79,7 +79,7 @@ int main(int argc, char **argv)
         snprintf(buf, BUFFER_SIZE, "%u", taglib_tag_##name(tag));\
         str_edit(#name, buf);\
         errno = 0;\
-        unsigned int res = strtoul(buf, NULL, 10);\
+        unsigned int res = (uint) strtoul(buf, NULL, 10);\
         taglib_tag_set_##name(tag, errno == 0 ? res : 0);\
         free(buf);\
     }
@@ -91,13 +91,13 @@ int main(int argc, char **argv)
     for (char *c = tagslist; *c; c++)
         switch (*c)
         {
-        case 't': EDIT_TAG(title);     break;
-        case 'a': EDIT_TAG(artist);    break;
-        case 'A': EDIT_TAG(album);     break;
-        case 'c': EDIT_TAG(comment);   break;
-        case 'g': EDIT_TAG(genre);     break;
-        case 'y': EDIT_TAG_INT(year);  break;
-        case 'T': EDIT_TAG_INT(track); break;
+        case 't': EDIT_TAG(title)      break;
+        case 'a': EDIT_TAG(artist)     break;
+        case 'A': EDIT_TAG(album)      break;
+        case 'c': EDIT_TAG(comment)    break;
+        case 'g': EDIT_TAG(genre)      break;
+        case 'y': EDIT_TAG_INT(year)   break;
+        case 'T': EDIT_TAG_INT(track)  break;
         default :
                   fprintf(stderr, "Warning: tag has to be in [%s]. Skipping «%c».\n", TAGSID, *c);
         }
